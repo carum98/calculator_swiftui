@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct Button : Hashable {
-    var label: String
-    var color: Color
+    let label: String
+    let color: Color
+    
+    var isZero: Bool = false
 }
 
 let clear = Button(label: "AC", color: Color.gray)
@@ -34,37 +36,48 @@ let one = Button(label: "1", color: Color.blue)
 let two = Button(label: "2", color: Color.blue)
 let three = Button(label: "3", color: Color.blue)
 
-let zero = Button(label: "0", color: Color.blue)
+let zero = Button(label: "0", color: Color.blue, isZero: true)
 let point = Button(label: ".", color: Color.blue)
 
 struct ContentView: View {
-    
+        
     let buttons = [
         [clear, negative, percent, divide],
         [seven, eight, nine, multiply],
         [four, five, six,subtract],
         [one,two, three, add],
-        [zero, point, point, equal]
+        [zero, point, equal]
     ]
     
     var body: some View {
-        ZStack (alignment: .bottom) {
+        ZStack {
             Color.black.ignoresSafeArea()
             
-            VStack(alignment: .trailing) {
+            VStack(alignment: .trailing, spacing: 0.0) {
                 
-                VStack(alignment: .leading) { 
-                    Text("0")
-                        .foregroundColor(.white)
-                        .font(.system(size:50))
-                }
-                .padding(.all)
-          
+                Text("0")
+                    .foregroundColor(.white)
+                    .font(.system(size:50))
+                    .padding(.all)
                 
                 ForEach(buttons, id: \.self) {row in
                     HStack(spacing: 0.0){
-                        ForEach(row, id: \.self) { value in
-                            CardView(content: value)
+                        let index = buttons.firstIndex(of: row)
+                        
+                        if (index == 4) {
+                            GeometryReader { geometry in
+                                HStack(spacing: 0.0) {
+                                    ForEach(row, id: \.self) { value in
+                                        let width = geometry.size.width / (value.isZero ? 2 : 4)
+                                        
+                                        CardView(content: value, width: width)
+                                    }
+                                }
+                            }
+                        } else {
+                            ForEach(row, id: \.self) { value in
+                                CardView(content: value)
+                            }
                         }
                     }
                 }
@@ -76,10 +89,11 @@ struct ContentView: View {
 
 struct CardView: View {
     var content: Button
+    var width: CGFloat = /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/
     
     var body: some View {
         Text(content.label)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .frame(maxWidth: width, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
             .font(.system(size: 32))
             .foregroundColor(.white)
             .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
@@ -92,7 +106,7 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .previewDevice("iPhone 12 mini")
+            .previewDevice("iPhone 11 Pro")
 //            .previewLayout(.fixed(width: 812, height: 375))
 //            .environment(\.horizontalSizeClass, .compact)
 //            .environment(\.verticalSizeClass, .compact)
