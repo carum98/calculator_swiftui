@@ -14,9 +14,9 @@ struct Button : Hashable {
     var isZero: Bool = false
 }
 
-let clear = Button(label: "AC", color: Color.gray)
-let negative = Button(label: "+/-", color: Color.gray)
-let percent = Button(label: "%", color: Color.gray)
+let clear = Button(label: "AC", color: Color("calcActButton"))
+let negative = Button(label: "+/-", color: Color("calcActButton"))
+let percent = Button(label: "%", color: Color("calcActButton"))
 
 let divide = Button(label: "÷", color: Color.orange)
 let multiply = Button(label: "x", color: Color.orange)
@@ -24,20 +24,20 @@ let subtract = Button(label: "-", color: Color.orange)
 let add = Button(label: "+", color: Color.orange)
 let equal = Button(label: "=", color: Color.orange)
 
-let seven = Button(label: "7", color: Color.blue)
-let eight = Button(label: "8", color: Color.blue)
-let nine = Button(label: "9", color: Color.blue)
+let seven = Button(label: "7", color: Color("calcNumButton"))
+let eight = Button(label: "8", color: Color("calcNumButton"))
+let nine = Button(label: "9", color: Color("calcNumButton"))
 
-let four = Button(label: "4", color: Color.blue)
-let five = Button(label: "5", color: Color.blue)
-let six = Button(label: "6", color: Color.blue)
+let four = Button(label: "4", color: Color("calcNumButton"))
+let five = Button(label: "5", color:Color("calcNumButton"))
+let six = Button(label: "6", color: Color("calcNumButton"))
 
-let one = Button(label: "1", color: Color.blue)
-let two = Button(label: "2", color: Color.blue)
-let three = Button(label: "3", color: Color.blue)
+let one = Button(label: "1", color: Color("calcNumButton"))
+let two = Button(label: "2", color: Color("calcNumButton"))
+let three = Button(label: "3", color: Color("calcNumButton"))
 
-let zero = Button(label: "0", color: Color.blue, isZero: true)
-let point = Button(label: ".", color: Color.blue)
+let zero = Button(label: "0", color: Color("calcNumButton"), isZero: true)
+let point = Button(label: ".", color: Color("calcNumButton"))
 
 struct ContentView: View {
         
@@ -51,7 +51,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color("calcPanel").ignoresSafeArea()
             
             VStack(alignment: .trailing, spacing: 0.0) {
                 
@@ -106,9 +106,6 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .previewDevice("iPhone 11 Pro")
-//            .previewLayout(.fixed(width: 812, height: 375))
-//            .environment(\.horizontalSizeClass, .compact)
-//            .environment(\.verticalSizeClass, .compact)
+            .previewDevice("iPhone 12 Pro Max")
     }
 }
